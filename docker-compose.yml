@@ -30,7 +30,7 @@ services:
       - net-redis
 
   mysql:
-    image: mysql:latest
+    image: mysql:5.7.22
     container_name: dnmp-mysql
     ports:
       - "3306:3306"
@@ -50,6 +50,10 @@ services:
       - net-redis
     ports:
       - "6379:6379"
+    volumes:
+      - ./redis/data:/data
+      - ./conf/redis/redis.conf:/usr/local/etc/redis/redis.conf
+      - ./log/redis/:/var/log/redis/:rw
 
 networks:
   net-php:
