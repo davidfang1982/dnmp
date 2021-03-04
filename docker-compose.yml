@@ -13,6 +13,7 @@ services:
       - ./log/:/var/log/dnmp/:rw
     networks:
       - net-php
+      - net-book
 
   php:
     build: ./php/php72/
@@ -29,6 +30,42 @@ services:
       - net-mysql
       - net-redis
 
+#  book:
+#    build:
+#      context: ./www/BookStack/docker/
+#    container_name: dnmp-book
+#    expose:
+#      - 8181
+#    #ports: 
+#    #  - "8182:8181"
+#    volumes:
+#      - ./www/BookStack/:/www/BookStack/:rw
+#    restart: always
+#    #tty: true 
+#    command: ./BookStack
+#    networks:
+#      - net-mysql
+#      - net-book
+#      #- default
+
+  smallbook:
+     build:
+       context: ./book
+     container_name: dnmp-smallbook
+     expose:
+       - 8181
+     #ports: 
+     #  - "8183:8282"
+     volumes:
+       - ./www/BookStack:/www/BookStack/:rw
+     restart: always
+     #tty: true
+     command: ./BookStack
+     networks:
+       - net-mysql
+       - net-book
+      #- default
+
   mysql:
     image: mysql:5.7.22
     container_name: dnmp-mysql
@@ -41,7 +78,7 @@ services:
     networks:
       - net-mysql
     environment:
-      MYSQL_ROOT_PASSWORD: "123456"
+      MYSQL_ROOT_PASSWORD: "biery123456biery"
 
   redis:
     image: redis:latest
@@ -59,3 +96,4 @@ networks:
   net-php:
   net-mysql:
   net-redis:
+  net-book:
